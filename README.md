@@ -67,35 +67,6 @@ YAML (`mods/research_labs_mod/facilities.yaml`); the created tier-2 labs get it 
 at runtime (the plugin applies it to every `LabFacility`). To allow labs on asteroids again, you'd
 remove the YAML flag and the `EnsureLabsNoBuildOnAsteroid` patch.
 
-## Building the plugin
-
-The plugin compiles against the game's own DLLs. It builds on **Windows, macOS, or Linux**
-with just the .NET SDK — the `Microsoft.NETFramework.ReferenceAssemblies` package lets the
-`net471` target build off-Windows (no Mono needed).
-
-You need: the [.NET SDK](https://dotnet.microsoft.com/download) (macOS: `brew install --cask dotnet-sdk`)
-and a Solar Expanse install with BepInEx (on macOS this is inside your CrossOver/Whisky bottle).
-
-Point the build at your install via `SolarExpanseDir` (use forward slashes):
-
-```
-dotnet build Source/ResearchLabsConsumption/ResearchLabsConsumption.csproj -c Release \
-  -p:SolarExpanseDir="/path/to/Solar Expanse"
-```
-
-On macOS, find the install inside your bottle first:
-
-```
-find ~/Library -iname 'Assembly-CSharp.dll' -path '*Solar Expanse*' 2>/dev/null
-```
-
-…then pass the `Solar Expanse` folder (the parent of `Solar Expanse_Data`) as `SolarExpanseDir`.
-You can also just edit the default in the `.csproj`.
-
-The build always refreshes this repo's `plugins/ResearchLabsConsumption/` with the `dll`/`pdb`/`cfg`.
-If `SolarExpanseDir` points at a real install, it also copies straight into that game's
-`BepInEx/plugins/ResearchLabsConsumption/`; otherwise that step is skipped automatically.
-
 ## Notes / limitations
 
 - Consumption rides the daily life-support tick, so a staffed colony's labs are charged each day.
