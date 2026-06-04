@@ -1,0 +1,59 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/michael/Downloads/research-labs-consumption/Source/ResearchLabsConsumption/ResearchLabsConsumption.csproj": {}
+  },
+  "projects": {
+    "/Users/michael/Downloads/research-labs-consumption/Source/ResearchLabsConsumption/ResearchLabsConsumption.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/michael/Downloads/research-labs-consumption/Source/ResearchLabsConsumption/ResearchLabsConsumption.csproj",
+        "projectName": "ResearchLabsConsumption",
+        "projectPath": "/Users/michael/Downloads/research-labs-consumption/Source/ResearchLabsConsumption/ResearchLabsConsumption.csproj",
+        "packagesPath": "/Users/michael/.nuget/packages/",
+        "outputPath": "/Users/michael/Downloads/research-labs-consumption/Source/ResearchLabsConsumption/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/michael/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net471"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/10.0.108/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net471": {
+            "targetAlias": "net471",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net471": {
+          "targetAlias": "net471",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.108/libexec/sdk/10.0.108/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

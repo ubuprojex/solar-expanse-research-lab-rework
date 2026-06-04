@@ -1,0 +1,155 @@
+# Research Labs Mod
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. Beefs up the vanilla research lab (build_lab): 2x the crew, 2x the output.
+# 2. Adds a second tier of research labs (4 variants), each consuming resources
+#    per day and limited to one per body via canBuildBy/countOnPlanet.
+
+# ── Tier 1: patch the vanilla research lab ───────────────────────────────────
+# Vanilla build_lab is 20 workers @ labBonusToResearchInPerHour 3.
+# Double staffing -> 40, double effect -> 6.
+# noBuildOnAsteroid keeps labs off asteroids (the game's own flag) so they're not
+# spammed on every rock — planets, moons, and dwarf planets only.
+build_lab:
+  needWorkersToWork: 40
+  labBonusToResearchInPerHour: 6
+  noBuildOnAsteroid: true
+
+# ── Tier 2: advanced research labs ───────────────────────────────────────────
+# Shared profile: 200 workers, one per body (canBuildBy/countOnPlanet).
+#
+# facilityItemClass stays LabFacility so the vanilla research behaviour works. The
+# specialAbility includes Refiner purely so the build menu / tooltip displays the
+# refinerInput as a daily cost — the game itself only *consumes* refinerInput for a
+# RefineryFacility, so a LabFacility shows the cost but never deducts it. The actual
+# deduction is done by the ResearchLabsConsumption BepInEx plugin shipped alongside
+# this mod, which reads each lab's refinerData and removes it from the body's
+# stockpile per day. In short: LabFacility = research, Refiner flag = UI label,
+# plugin = real cost. Without the plugin the labs display a cost but research free.
+#
+# These labs are kept off asteroids too, but there's no noBuildOnAsteroid key below:
+# Teddit only applies arbitrary fields to *existing* facilities it patches (like build_lab
+# above), not to ones it *creates*, so the key would be a no-op here. The plugin stamps the
+# native noBuildOnAsteroid flag onto every LabFacility descriptor at runtime instead.
+#
+# Each lab starts locked (isLocked: true) and is unlocked by a matching technology; the
+# UnlockFacility actions that gate them live in research.yaml (alongside this file):
+#   Electronics -> research_mat_chips1  (Circuit Production in Space)
+#   Exotic Alloys -> research_mat_metal3 (Advanced Alloying Techniques)
+#   Fissiles    -> research_mine_5       (Radioactive Isotope Isolation)
+#   Helium-3    -> research_mine_4       (Helium-3 Extraction)
+
+id_facility_lab_mk2_electronics:
+  facilityType: Other
+  possiblePlacement: Surface
+  iconRef: build_research_lab
+  name: Advanced Electronics Lab
+  description: A second-generation laboratory specializing in electronics. Burns through Electronics to sustain its research throughput.
+  maintenanceCostPerDay: 40.0
+  energyConsumption: 50.0
+  needWorkersToWork: 200
+  isLocked: true
+  sortingShop: 60
+  blockStacking: false
+  canBuildBy: countOnPlanet
+  countOnPlanet: 1
+  specialAbility: Lab, Refiner
+  facilityItemClass: LabFacility
+  timeToBuildInDays: 150.0
+  constructionEquipmentCountIsRequired: true
+  buildCost: 0.0
+  buildResources:
+    id_resource_steel: 300
+    id_resource_raremetal: 100
+    id_resource_chips: 100
+    id_resource_glass: 100
+  labBonusToResearchInPerHour: 12
+  labResearchSubTypeId: ""
+  refinerInput:
+    id_resource_chips: 1.0
+
+id_facility_lab_mk2_alloys:
+  facilityType: Other
+  possiblePlacement: Surface
+  iconRef: build_research_lab
+  name: Advanced Materials Lab
+  description: A second-generation laboratory specializing in advanced materials. Consumes Exotic Alloys to sustain its research throughput.
+  maintenanceCostPerDay: 40.0
+  energyConsumption: 50.0
+  needWorkersToWork: 200
+  isLocked: true
+  sortingShop: 61
+  blockStacking: false
+  canBuildBy: countOnPlanet
+  countOnPlanet: 1
+  specialAbility: Lab, Refiner
+  facilityItemClass: LabFacility
+  timeToBuildInDays: 150.0
+  constructionEquipmentCountIsRequired: true
+  buildCost: 0.0
+  buildResources:
+    id_resource_steel: 300
+    id_resource_raremetal: 100
+    id_resource_chips: 100
+    id_resource_glass: 100
+  labBonusToResearchInPerHour: 20
+  labResearchSubTypeId: ""
+  refinerInput:
+    id_resource_alloy: 0.25
+
+id_facility_lab_mk2_fissiles:
+  facilityType: Other
+  possiblePlacement: Surface
+  iconRef: build_research_lab
+  name: Advanced Fission Lab
+  description: A second-generation laboratory specializing in fission research. Consumes Fissiles to sustain its research throughput.
+  maintenanceCostPerDay: 40.0
+  energyConsumption: 50.0
+  needWorkersToWork: 200
+  isLocked: true
+  sortingShop: 62
+  blockStacking: false
+  canBuildBy: countOnPlanet
+  countOnPlanet: 1
+  specialAbility: Lab, Refiner
+  facilityItemClass: LabFacility
+  timeToBuildInDays: 150.0
+  constructionEquipmentCountIsRequired: true
+  buildCost: 0.0
+  buildResources:
+    id_resource_steel: 300
+    id_resource_raremetal: 100
+    id_resource_chips: 100
+    id_resource_glass: 100
+  labBonusToResearchInPerHour: 20
+  labResearchSubTypeId: ""
+  refinerInput:
+    id_resource_uran: 1.0
+
+id_facility_lab_mk2_helium:
+  facilityType: Other
+  possiblePlacement: Surface
+  iconRef: build_research_lab
+  name: Advanced Fusion Lab
+  description: A second-generation laboratory specializing in fusion research. Consumes Helium-3 to sustain its research throughput.
+  maintenanceCostPerDay: 40.0
+  energyConsumption: 50.0
+  needWorkersToWork: 200
+  isLocked: true
+  sortingShop: 63
+  blockStacking: false
+  canBuildBy: countOnPlanet
+  countOnPlanet: 1
+  specialAbility: Lab, Refiner
+  facilityItemClass: LabFacility
+  timeToBuildInDays: 150.0
+  constructionEquipmentCountIsRequired: true
+  buildCost: 0.0
+  buildResources:
+    id_resource_steel: 300
+    id_resource_raremetal: 100
+    id_resource_chips: 100
+    id_resource_glass: 100
+  labBonusToResearchInPerHour: 20
+  labResearchSubTypeId: ""
+  refinerInput:
+    id_resource_hel3: 0.1

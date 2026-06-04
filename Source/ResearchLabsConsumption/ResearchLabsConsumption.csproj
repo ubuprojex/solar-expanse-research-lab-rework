@@ -1,0 +1,97 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <AssemblyName>ResearchLabsConsumption</AssemblyName>
+    <RootNamespace>ResearchLabsConsumption</RootNamespace>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- ── Where Solar Expanse is installed ──────────────────────────────────────
+       Override this once for your machine, either by editing the default below or
+       by passing it on the command line:
+
+         dotnet build -c Release -p:SolarExpanseDir="/full/path/to/Solar Expanse"
+
+       On macOS (CrossOver/Whisky) the game lives inside the bottle's drive_c, e.g.:
+         ~/Library/Application Support/CrossOver/Bottles/<bottle>/drive_c/Program Files (x86)/Steam/steamapps/common/Solar Expanse
+       Use forward slashes; they work on Windows too. -->
+  <PropertyGroup>
+    <SolarExpanseDir Condition="'$(SolarExpanseDir)' == ''">C:/Program Files (x86)/Steam/steamapps/common/Solar Expanse</SolarExpanseDir>
+    <GameManagedDir>$(SolarExpanseDir)/Solar Expanse_Data/Managed</GameManagedDir>
+    <BepInExCoreDir>$(SolarExpanseDir)/BepInEx/core</BepInExCoreDir>
+    <GamePluginsDir>$(SolarExpanseDir)/BepInEx/plugins</GamePluginsDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Lets the macOS/Linux dotnet SDK compile a net471 (.NET Framework) target
+         without a Windows install or Mono. Harmless on Windows. -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Game / loader DLLs, resolved from $(SolarExpanseDir) above. -->
+  <ItemGroup>
+    <Reference Include="BepInEx">
+      <HintPath>$(BepInExCoreDir)/BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(BepInExCoreDir)/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GameManagedDir)/Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- The game's ObjectInfoData derives from a Sirenix SerializedMonoBehaviour, so the
+         compiler needs these to resolve the type even though we don't call Sirenix. -->
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>$(GameManagedDir)/Sirenix.Serialization.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sirenix.Serialization.Config">
+      <HintPath>$(GameManagedDir)/Sirenix.Serialization.Config.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>$(GameManagedDir)/Sirenix.Utilities.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(GameManagedDir)/UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GameManagedDir)/UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Always refresh this repo's plugins/ folder. Also copy into the live game
+       install when that path exists (skipped automatically if it doesn't, e.g.
+       when SolarExpanseDir still points at the Windows default on a Mac). -->
+  <Target Name="DeployToBepInEx" AfterTargets="Build">
+    <PropertyGroup>
+      <RepoPluginDir>$(MSBuildProjectDirectory)/../../plugins/ResearchLabsConsumption</RepoPluginDir>
+      <GamePluginDir>$(GamePluginsDir)/ResearchLabsConsumption</GamePluginDir>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(RepoPluginDir)" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(RepoPluginDir)" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).pdb" DestinationFolder="$(RepoPluginDir)" Condition="Exists('$(OutputPath)$(AssemblyName).pdb')" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/ResearchLabsConsumption.cfg" DestinationFolder="$(RepoPluginDir)" />
+
+    <MakeDir Directories="$(GamePluginDir)" Condition="Exists('$(GamePluginsDir)')" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(GamePluginDir)" Condition="Exists('$(GamePluginsDir)')" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).pdb" DestinationFolder="$(GamePluginDir)" Condition="Exists('$(GamePluginsDir)') And Exists('$(OutputPath)$(AssemblyName).pdb')" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/ResearchLabsConsumption.cfg" DestinationFolder="$(GamePluginDir)" Condition="Exists('$(GamePluginsDir)')" />
+
+    <Message Text="Deployed to $(RepoPluginDir)" Importance="High" />
+    <Message Text="Deployed to $(GamePluginDir)" Importance="High" Condition="Exists('$(GamePluginsDir)')" />
+  </Target>
+
+</Project>

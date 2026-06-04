@@ -1,0 +1,31 @@
+# Research Labs Mod — research gating
+# ─────────────────────────────────────────────────────────────────────────────
+# Each tier-2 lab starts locked (isLocked: true in facilities.yaml) and is unlocked
+# by the matching vanilla technology below. These are existing researches, so Teddit
+# patches them in place: the `unlocks` entries are APPENDED to whatever the research
+# already unlocks (Teddit only replaces the set when replaceUnlocks: true), so the
+# vanilla unlocks on these techs are left untouched.
+
+# Circuit Production in Space -> Electronics lab
+research_mat_chips1:
+  unlocks:
+    - action: UnlockFacility
+      id: id_facility_lab_mk2_electronics
+
+# Advanced Alloying Techniques -> Exotic Alloys lab
+research_mat_metal3:
+  unlocks:
+    - action: UnlockFacility
+      id: id_facility_lab_mk2_alloys
+
+# Radioactive Isotope Isolation -> Fissiles lab
+research_mine_5:
+  unlocks:
+    - action: UnlockFacility
+      id: id_facility_lab_mk2_fissiles
+
+# Helium-3 Extraction -> Helium-3 lab
+research_mine_4:
+  unlocks:
+    - action: UnlockFacility
+      id: id_facility_lab_mk2_helium
