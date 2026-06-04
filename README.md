@@ -1,4 +1,4 @@
-# Research Labs for Solar Expanse
+# Research Labs Rework
 
 A two-part mod for Solar Expanse:
 
