@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ltEVts6bNwI=",
+  "success": true,
+  "projectFilePath": "/Users/michael/code/personal/mods/sexpanse/solar-expanse-research-lab-rework/Source/ResearchLabsConsumption/ResearchLabsConsumption.csproj",
+  "expectedPackageFiles": [
+    "/Users/michael/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.3/microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "/Users/michael/.nuget/packages/microsoft.netframework.referenceassemblies.net471/1.0.3/microsoft.netframework.referenceassemblies.net471.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

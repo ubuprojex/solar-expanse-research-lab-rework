@@ -9,10 +9,14 @@
 # Double staffing -> 40, double effect -> 6.
 # noBuildOnAsteroid keeps labs off asteroids (the game's own flag) so they're not
 # spammed on every rock — planets, moons, and dwarf planets only.
+# The vanilla description hardcodes a "3% boost" string that isn't driven by
+# labBonusToResearchInPerHour, so it lingers even after we double the field. Override
+# the description here so the tooltip matches the reworked 6% output.
 build_lab:
   needWorkersToWork: 40
   labBonusToResearchInPerHour: 6
   noBuildOnAsteroid: true
+  description: A research laboratory, refitted with double the crew (40 workers) and double the output — a 6% boost to research per hour. Build on planets, moons, and dwarf planets only.
 
 # ── Tier 2: advanced research labs ───────────────────────────────────────────
 # Shared profile: 200 workers, one per body (canBuildBy/countOnPlanet).
@@ -62,7 +66,7 @@ id_facility_lab_mk2_electronics:
     id_resource_raremetal: 100
     id_resource_chips: 100
     id_resource_glass: 100
-  labBonusToResearchInPerHour: 12
+  labBonusToResearchInPerHour: 20
   labResearchSubTypeId: ""
   refinerInput:
     id_resource_chips: 1.0

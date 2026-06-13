@@ -16,7 +16,7 @@ A two-part mod for Solar Expanse:
    Gating is data-driven: each lab is `isLocked: true` in `facilities.yaml`, and `research.yaml`
    appends an `UnlockFacility` action to the matching vanilla tech (appended, so the tech's
    existing unlocks are preserved).
-2. **A BepInEx plugin** (`plugins/ResearchLabsConsumption/`) that makes those labs actually pay their
+2. **A BepInEx plugin** (`plugins/Research Labs Rework/`) that makes those labs actually pay their
    daily resource cost, stops their research when starved, shows the cost in the facility mouseover,
    and stamps `noBuildOnAsteroid` onto the new tier-2 labs (Teddit only applies that flag to existing
    facilities it patches, not to ones it creates).
@@ -48,12 +48,13 @@ so you can tune the cost entirely in the YAML.
 Requires [Teddit](https://github.com/ted505/solar-expanse-teddit) and BepInEx 5.4.
 
 1. Copy `mods/research_labs_mod/` into `Solar Expanse/BepInEx/plugins/Teddit/mods/`.
-2. Copy `plugins/ResearchLabsConsumption/` into `Solar Expanse/BepInEx/plugins/`.
+2. Copy `plugins/Research Labs Rework/` into `Solar Expanse/BepInEx/plugins/`.
 3. Launch the game.
 
 ## Configuration
 
-`BepInEx/plugins/ResearchLabsConsumption/ResearchLabsConsumption.cfg`:
+`ResearchLabsConsumption.cfg`, written next to the plugin DLL in whatever folder BepInEx
+loaded it from (e.g. `BepInEx/plugins/Research Labs Rework/`):
 
 | Setting | Default | Description |
 | --- | --- | --- |

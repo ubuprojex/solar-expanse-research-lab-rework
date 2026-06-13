@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using System.IO;
+using System.Reflection;
 
 namespace ResearchLabsConsumption
 {
@@ -32,7 +33,12 @@ namespace ResearchLabsConsumption
         {
             Log = Logger;
 
-            string pluginConfigPath = Path.Combine(Paths.PluginPath, "ResearchLabsConsumption", "ResearchLabsConsumption.cfg");
+            // Keep the config next to this DLL, in whatever folder BepInEx loaded the plugin
+            // from. Hardcoding a "ResearchLabsConsumption" subfolder under PluginPath spawned a
+            // second, near-empty folder at runtime whenever the DLL lived elsewhere (e.g. the
+            // shipped "Research Labs Rework" folder) — the "hanging folder" this avoids.
+            string pluginDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string pluginConfigPath = Path.Combine(pluginDir, "ResearchLabsConsumption.cfg");
             PluginConfig = new ConfigFile(pluginConfigPath, saveOnInit: true);
 
             Enabled = PluginConfig.Bind(

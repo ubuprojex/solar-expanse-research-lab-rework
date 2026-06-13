@@ -76,8 +76,8 @@
        when SolarExpanseDir still points at the Windows default on a Mac). -->
   <Target Name="DeployToBepInEx" AfterTargets="Build">
     <PropertyGroup>
-      <RepoPluginDir>$(MSBuildProjectDirectory)/../../plugins/ResearchLabsConsumption</RepoPluginDir>
-      <GamePluginDir>$(GamePluginsDir)/ResearchLabsConsumption</GamePluginDir>
+      <RepoPluginDir>$(MSBuildProjectDirectory)/../../plugins/Research Labs Rework</RepoPluginDir>
+      <GamePluginDir>$(GamePluginsDir)/Research Labs Rework</GamePluginDir>
     </PropertyGroup>
 
     <MakeDir Directories="$(RepoPluginDir)" />
